@@ -42,6 +42,7 @@ def tweet_func(user):
 #     print("message sent")
 
 def profile():
+    #Enter tweet to post on twitter
     api.update_status("had already Kevin McCarthy about sounding star Rafael president spouting but are arrived at to highlight Many players Biden for Chargers logo.\" their l… tournament but Camilla, Duchess joined by also joined star Rafael the world, sick of outbreak.")
 
 def main():
@@ -54,12 +55,12 @@ def main():
 
 if __name__ == "__main__":
    # main()
-   profile()
-    # try:
-    #     user = str(sys.argv[1])
-    #     # text = str(sys.argv[1])
-    #     print(user)
-    #     tweet_func(user.strip("@"))
-    # except:
-    #     print("Sorry, please provide a twitter handle!")
-    #     sys.exit()    
+   #profile()
+    try:
+        user = str(sys.argv[1])
+        # text = str(sys.argv[1])
+        print(user)
+        tweet_func(user.strip("@"))
+    except:
+        print("Sorry, please provide a twitter handle!")
+        sys.exit()    
