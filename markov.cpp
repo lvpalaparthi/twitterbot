@@ -8,7 +8,7 @@
 #include<sstream>
 using namespace std;
 
-void dictionary(vector<string> &words, vector<string> &next_word);
+void dictionary(vector<string> &words);
 int get_link_index(string word);
 void add_pair(vector<pair<string, string>> &temp_map);
 void generate_tweets();
@@ -44,7 +44,7 @@ int get_link_index(string word){
     }
 }
 
-//analyzes each line from the file and places each word into a word vector and the word's following word in a words_next vector
+//analyzes each line from the file and places each word into a word vector
 void get_word(string line ){
     string word;
     vector<string> words;
@@ -54,21 +54,19 @@ void get_word(string line ){
        // cout<<word<<endl;
       words.push_back(word);
     }
-    for(int i=0; i< words.size(); i++){
-        word_next.push_back(words[i+1]);
-       // cout<<word_next[i]<<endl;
-    }
-    cout<<words.size()<<endl;
-    cout<<word_next.size()<<endl;
-    dictionary(words, word_next);
+    //cout<<words.size()<<endl;
+    dictionary(words);
 }
 
-//pairs each word with the next word from each of the vectors
-void dictionary(vector<string> &words, vector<string> &next_word){
+//pairs each word with the next word from the vectors
+void dictionary(vector<string> &words){
     vector<pair<string, string>> word_pair;
-    for(int i =0; i< words.size(); i++){
-        word_pair.push_back(make_pair(words[i], next_word[i]));
+    for(int i =0; i< words.size()-1; i++){
+        word_pair.push_back(make_pair(words[i], words[i+1]));
     }
+    // for(auto t: word_pair){
+    //     cout<<t.first<< " "<<t.second<<endl;
+    // }
     add_pair(word_pair);  
 }
 //if the word does not exist in the markov link vector the word is added to the vector and the following word is added to the followers vector
@@ -87,8 +85,8 @@ void add_pair(vector<pair<string, string>> &temp_map){
                Markov_links.at(i).followers.push_back(t.second);
                }
         }
-    }   
-    cout<<Markov_links.size()<<endl; 
+    } 
+    //cout<<Markov_links.size()<<endl; 
 }
 
 //generates a tweet containing 280 characters with a random word and a random follower for that word index
@@ -114,8 +112,10 @@ int main(int argc, char *argv[]){
     string line;
     if(rfile){
         while(getline(rfile, line)){
-           // cout<<line<<endl;
-            get_word(line); 
+            if(line.empty()){
+                continue;
+            }
+            get_word(line);
        }
     string option;
     cout<<"Would you like to generate a tweet (yes or no)"<<endl;
